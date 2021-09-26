@@ -1,3 +1,5 @@
+'use strict';
+
 import './style.css';
 import InviewTimer from './src/inview-timer';
 

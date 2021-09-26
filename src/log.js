@@ -1,3 +1,4 @@
+'use strict';
 class Log {
   constructor() {
     this.debug = false;
