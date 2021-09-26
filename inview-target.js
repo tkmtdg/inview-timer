@@ -5,9 +5,11 @@ class InviewTarget {
     this.timerID = null;
     this.timeout = 3000;
     this.timerLoop = false;
+    this.timerLoopLimit = null;
     if (obj) {
       Object.assign(this, obj);
     }
+    this._timerLoopCount = 0;
   }
   get debug() {
     return this._debug;
@@ -39,6 +41,22 @@ class InviewTarget {
   set timerLoop(timerLoop) {
     this._timerLoop = timerLoop;
   }
+  get timerLoopLimit() {
+    return this._timerLoopLimit;
+  }
+  set timerLoopLimit(timerLoopLimit) {
+    this._timerLoopLimit = timerLoopLimit;
+  }
+  get timerLoopCount() {
+    return this._timerLoopCount;
+  }
+
+  get describe() {
+    return {
+      eventTarget: this.target,
+      inviewTarget: this
+    };
+  }
 
   log(...args) {
     if (this.debug) {
@@ -46,32 +64,36 @@ class InviewTarget {
     }
   }
 
+  logEvent(...args) {
+    this.log(...args, this.describe);
+  }
+
   makeEvent(eventType) {
     return new CustomEvent(eventType, {
-      detail: {
-        inviewTarget: this.target
-      }
+      detail: this.describe
     });
   }
 
   dispatch(eventType) {
     this.target.dispatchEvent(this.makeEvent(eventType));
+    this.logEvent(eventType);
   }
 
   setTimer() {
-    this.log('timer set', {
-      eventTarget: this.target
-    });
+    this.logEvent('timer set');
     const timerID = window.setTimeout(() => {
-      this.timerID = null;
-      this.log('timer timedout', {
-        eventTarget: this.target
-      });
       this.dispatch('timer timedout');
+      this.timerID = null;
       if (this.timerLoop) {
-        this.log('timer loop', {
-          eventTarget: this.target
-        });
+        if (
+          this.timerLoopLimit > 0 &&
+          this.timerLoopCount >= this.timerLoopLimit
+        ) {
+          this.logEvent('timer loop limit reached');
+          return;
+        }
+        this._timerLoopCount++;
+        this.logEvent('timer loop trying #' + this.timerLoopCount);
         this.setTimer();
       }
     }, this.timeout);
@@ -81,9 +103,6 @@ class InviewTarget {
   clearTimer() {
     if (this.timerID) {
       window.clearTimeout(this.timerID);
-      this.log('timer canceled', {
-        eventTarget: this.target
-      });
       this.dispatch('timer canceled');
     }
   }

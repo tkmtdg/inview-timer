@@ -9,6 +9,7 @@ for (const target of targets) {
     const color = (Math.random() * 0xFFFFFF | 0).toString(16);
     const randomColor = '#' + ('000000' + color).slice(-6);
     target.style.backgroundColor = randomColor;
+    target.querySelector('.loop-tries').innerHTML = event.detail.inviewTarget.timerLoopCount;
   });
 }
 const inviewTimer = new InviewTimer({
@@ -17,6 +18,7 @@ const inviewTimer = new InviewTimer({
   inviewTargetOptions: {
     timeout: 5000,
     timerLoop: true,
+    timerLoopLimit: 3
   },
   intersectionObserverOptions: {
     threshold: 0.5

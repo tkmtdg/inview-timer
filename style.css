@@ -3,3 +3,7 @@
   height: 250px;
   background: #f00;
 }
+
+.loop-tries::before {
+  content: '#';
+}
