@@ -6,7 +6,7 @@ const {
 module.exports = defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'inview-timer.js'),
+      entry: path.resolve(__dirname, 'src', 'inview-timer.js'),
       name: 'InviewTimerModule',
       fileName: (format) => `inview-timer.${format}.js`
     },
