@@ -1,6 +1,10 @@
-class InviewTarget {
+import Log from './log'
+import {
+  nanoid
+} from 'nanoid'
+
+export default class InviewTarget {
   constructor(obj = null) {
-    this.debug = false;
     this.target = null;
     this.timerID = null;
     this.timeout = 3000;
@@ -9,13 +13,11 @@ class InviewTarget {
     if (obj) {
       Object.assign(this, obj);
     }
+    this.refreshId();
     this._timerLoopCount = 0;
   }
-  get debug() {
-    return this._debug;
-  }
-  set debug(debug) {
-    this._debug = debug;
+  get id() {
+    return this._id;
   }
   get target() {
     return this._target;
@@ -53,19 +55,23 @@ class InviewTarget {
 
   get describe() {
     return {
+      eventTargetId: this.target.id,
       eventTarget: this.target,
+      inviewTargetId: this.id,
       inviewTarget: this
     };
   }
 
+  refreshId() {
+    this._id = nanoid(4);
+  }
+
   log(...args) {
-    if (this.debug) {
-      console.log(this.constructor.name, ...args);
-    }
+    Log.log(this.constructor.name, ...args);
   }
 
   logEvent(...args) {
-    this.log(...args, this.describe);
+    this.log(...args, this.describe)
   }
 
   makeEvent(eventType) {
@@ -107,7 +113,3 @@ class InviewTarget {
     }
   }
 };
-
-export {
-  InviewTarget
-}

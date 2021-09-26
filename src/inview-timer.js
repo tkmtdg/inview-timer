@@ -1,8 +1,7 @@
-import {
-  InviewTarget
-} from './inview-target'
+import Log from './log'
+import InviewTarget from './inview-target'
 
-class InviewTimer {
+export default class InviewTimer {
   constructor(obj = null) {
     this.debug = false;
     this.observeTargets = [];
@@ -19,6 +18,7 @@ class InviewTimer {
   }
   set debug(debug) {
     this._debug = debug;
+    Log.debug = this._debug;
   }
 
   get observeTargets() {
@@ -50,10 +50,19 @@ class InviewTimer {
   }
 
   log(...args) {
-    if (this.debug) {
-      console.log(this.constructor.name, ...args);
-    }
+    Log.log(this.constructor.name, ...args);
   }
+
+  avoidIdCollision = (inviewTarget) => {
+    const collision = this.inviewTargets.some(e => {
+      return inviewTarget.id === e.id;
+    });
+    if (collision) {
+      this.log(`ID collision detected: "${inviewTarget.id}"`);
+      inviewTarget.refreshId();
+      this.avoidIdCollision(inviewTarget);
+    }
+  };
 
   observe() {
     const callback = (entries, observer) => {
@@ -80,40 +89,25 @@ class InviewTimer {
         target,
         ...this.inviewTargetOptions,
       });
+      this.avoidIdCollision(inviewTarget);
       this.inviewTargets.push(inviewTarget);
 
       inviewTarget.target = target;
       target.addEventListener('inview in', (event) => {
-        this.log(event.type, {
-          eventTarget: event.target,
-          inviewTarget
-        });
+        this.log(event.type, inviewTarget.describe);
         inviewTarget.setTimer();
       });
       target.addEventListener('inview out', (event) => {
-        this.log(event.type, {
-          eventTarget: event.target,
-          inviewTarget
-        });
+        this.log(event.type, inviewTarget.describe);
         inviewTarget.clearTimer();
       });
       target.addEventListener('timer timedout', (event) => {
-        this.log(event.type, {
-          eventTarget: event.target,
-          inviewTarget
-        });
+        this.log(event.type, inviewTarget.describe);
       });
       target.addEventListener('timer canceled', (event) => {
-        this.log(event.type, {
-          eventTarget: event.target,
-          inviewTarget
-        });
+        this.log(event.type, inviewTarget.describe);
       });
       observer.observe(target);
     }
   }
 };
-
-export {
-  InviewTimer
-}

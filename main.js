@@ -1,7 +1,5 @@
 import './style.css';
-import {
-  InviewTimer
-} from './inview-timer';
+import InviewTimer from './src/inview-timer';
 
 const targets = document.querySelectorAll('.target');
 for (const target of targets) {

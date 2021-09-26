@@ -8,5 +8,8 @@
   },
   "devDependencies": {
     "vite": "^2.5.4"
+  },
+  "dependencies": {
+    "nanoid": "^3.1.28"
   }
 }
