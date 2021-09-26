@@ -83,31 +83,32 @@ export default class InviewTimer {
 
     const observer = new IntersectionObserver(callback, this.intersectionObserverOptions);
 
-    for (const target of this.observeTargets) {
+    for (const observeTarget of this.observeTargets) {
       const inviewTarget = new InviewTarget({
         debug: this.debug,
-        target,
+        target: observeTarget,
         ...this.inviewTargetOptions,
       });
       this.avoidIdCollision(inviewTarget);
       this.inviewTargets.push(inviewTarget);
 
-      inviewTarget.target = target;
-      target.addEventListener('inview in', (event) => {
+      inviewTarget.target = observeTarget;
+      observeTarget.addEventListener('inview in', (event) => {
         this.log(event.type, inviewTarget.describe);
         inviewTarget.setTimer();
       });
-      target.addEventListener('inview out', (event) => {
+      observeTarget.addEventListener('inview out', (event) => {
         this.log(event.type, inviewTarget.describe);
         inviewTarget.clearTimer();
       });
-      target.addEventListener('timer timedout', (event) => {
+      observeTarget.addEventListener('timer timedout', (event) => {
         this.log(event.type, inviewTarget.describe);
       });
-      target.addEventListener('timer canceled', (event) => {
+      observeTarget.addEventListener('timer canceled', (event) => {
         this.log(event.type, inviewTarget.describe);
       });
-      observer.observe(target);
+
+      observer.observe(observeTarget);
     }
   }
 };
