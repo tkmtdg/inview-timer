@@ -99,7 +99,7 @@ export default class InviewTarget {
           return;
         }
         this._timerLoopCount++;
-        this.logEvent('timer loop trying #' + this.timerLoopCount);
+        this.logEvent(`timer loop trying #${this.timerLoopCount}`);
         this.setTimer();
       }
     }, this.timeout);
