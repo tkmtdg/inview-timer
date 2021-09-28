@@ -75,7 +75,7 @@ export default class InviewTarget {
   }
 
   log(...args) {
-    Log.log(`[InviewTarget]`, ...args);
+    Log.log('[InviewTarget]', ...args);
   }
 
   logEvent(...args) {

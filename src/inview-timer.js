@@ -52,7 +52,7 @@ export default class InviewTimer {
   }
 
   log(...args) {
-    Log.log(`[InviewTimer]`, ...args);
+    Log.log('[InviewTimer]', ...args);
   }
 
   avoidIdCollision = (inviewTarget) => {
