@@ -3,6 +3,8 @@ const {
   defineConfig
 } = require('vite')
 
+import eslintPlugin from 'vite-plugin-eslint';
+
 module.exports = defineConfig({
   build: {
     lib: {
@@ -11,5 +13,8 @@ module.exports = defineConfig({
       formats: ['umd'],
       fileName: (format) => `lalo.${format}.js`
     },
-  }
+  },
+  plugins: [eslintPlugin({
+    // fix: true
+  })],
 })

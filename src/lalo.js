@@ -52,7 +52,7 @@ export default class Lalo {
     this._intersectionObserverOptions = intersectionObserverOptions;
   }
 
-  avoidIdCollision = (inviewTarget) => {
+  avoidIdCollision(inviewTarget) {
     const collision = this.inviewTargets.some(e => {
       return inviewTarget.id === e.id;
     });
@@ -61,7 +61,7 @@ export default class Lalo {
       inviewTarget.refreshId();
       this.avoidIdCollision(inviewTarget);
     }
-  };
+  }
 
   observe() {
     const callback = (entries, observer) => {

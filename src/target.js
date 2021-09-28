@@ -72,7 +72,7 @@ export default class Target {
   }
 
   refreshId() {
-    this._id = nanoid(4);
+    this._id = nanoid(1);
   }
 
   logEvent(...args) {
