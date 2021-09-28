@@ -11,7 +11,7 @@ class Log {
   }
   log(...args) {
     if (this._debug) {
-      console.log(...args);
+      console.log('[lalo]', ...args);
     }
   }
 }

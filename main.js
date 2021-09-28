@@ -1,7 +1,7 @@
 'use strict';
 
 import './style.css';
-import Timer from './src/timer';
+import Lalo from './src/lalo';
 
 const targets = document.querySelectorAll('.target');
 for (const target of targets) {
@@ -12,7 +12,7 @@ for (const target of targets) {
     target.querySelector('.loop-tries').innerHTML = event.detail.inviewTarget.timerLoopCount;
   });
 }
-const inviewTimer = new Timer({
+const inviewTimer = new Lalo({
   debug: true,
   observeTargets: targets,
   inviewTargetOptions: {

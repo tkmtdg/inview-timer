@@ -6,10 +6,10 @@ const {
 module.exports = defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src', 'inview-timer.js'),
-      name: 'InviewTimerModule',
+      entry: path.resolve(__dirname, 'src', 'lalo.js'),
+      name: 'Lalo',
       formats: ['umd'],
-      fileName: (format) => `inview-timer.${format}.js`
+      fileName: (format) => `lalo.${format}.js`
     },
   }
 })

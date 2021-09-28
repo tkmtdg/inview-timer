@@ -4,7 +4,7 @@ import Log from './log'
 import Event from './event';
 import Target from './target'
 
-export default class Timer {
+export default class Lalo {
   constructor(obj = null) {
     this.debug = false;
     this.observeTargets = [];
