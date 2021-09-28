@@ -72,7 +72,7 @@ export default class Target {
   }
 
   refreshId() {
-    this._id = nanoid(1);
+    this._id = nanoid(4);
   }
 
   logEvent(...args) {
@@ -122,4 +122,4 @@ export default class Target {
       this.dispatch(Event.TIMER_CANCELED);
     }
   }
-};
+}

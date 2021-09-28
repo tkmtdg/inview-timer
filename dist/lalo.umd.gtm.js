@@ -18,7 +18,7 @@ eval('var __defProp=Object.defineProperty,__getOwnPropSymbols=Object.getOwnPrope
 'LoopLimit}get timerLoopCount(){return this._timerLoopCount}get describe(){return{eventTargetId:this.target.id,eventTarge'+
 't:this.target,inviewTargetId:this.id,inviewTarget:this}}refreshId(){this._id=((t=21)=>{let e="",i=crypto.getRandomValues'+
 '(new Uint8Array(t));for(;t--;){let r=63&i[t];e+=r<36?r.toString(36):r<62?(r-26).toString(36).toUpperCase():r<63?"_":"-"}'+
-'return e})(1)}logEvent(...e){t.log(...e,this.describe)}makeEvent(t){return new CustomEvent(t,{detail:this.describe})}dis'+
+'return e})(4)}logEvent(...e){t.log(...e,this.describe)}makeEvent(t){return new CustomEvent(t,{detail:this.describe})}dis'+
 'patch(t){this.target.dispatchEvent(this.makeEvent(t)),this.logEvent(t)}setTimer(){if(this.timerLoopLimitReached)return v'+
 'oid this.logEvent("already timer loop limit reached");this.logEvent(e.TIMER_SET);const t=window.setTimeout((()=>{if(this'+
 '.dispatch(e.TIMER_TIMEDOUT),this.timerID=null,this.timerLoop){if(this._timerLoopCount++,this.timerLoopLimitReached)retur'+

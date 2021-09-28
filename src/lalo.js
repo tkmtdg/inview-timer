@@ -111,4 +111,4 @@ export default class Lalo {
       observer.observe(observeTarget);
     }
   }
-};
+}
