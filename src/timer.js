@@ -2,9 +2,9 @@
 
 import Log from './log'
 import Event from './event';
-import InviewTarget from './inview-target'
+import Target from './target'
 
-export default class InviewTimer {
+export default class Timer {
   constructor(obj = null) {
     this.debug = false;
     this.observeTargets = [];
@@ -52,16 +52,12 @@ export default class InviewTimer {
     this._intersectionObserverOptions = intersectionObserverOptions;
   }
 
-  log(...args) {
-    Log.log('[InviewTimer]', ...args);
-  }
-
   avoidIdCollision = (inviewTarget) => {
     const collision = this.inviewTargets.some(e => {
       return inviewTarget.id === e.id;
     });
     if (collision) {
-      this.log(`ID collision detected: "${inviewTarget.id}"`);
+      Log.log(`ID collision detected: "${inviewTarget.id}"`);
       inviewTarget.refreshId();
       this.avoidIdCollision(inviewTarget);
     }
@@ -84,7 +80,7 @@ export default class InviewTimer {
     const observer = new IntersectionObserver(callback, this.intersectionObserverOptions);
 
     for (const observeTarget of this.observeTargets) {
-      const inviewTarget = new InviewTarget({
+      const inviewTarget = new Target({
         debug: this.debug,
         target: observeTarget,
         ...this.inviewTargetOptions,

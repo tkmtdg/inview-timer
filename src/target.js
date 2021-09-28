@@ -6,7 +6,7 @@ import {
   nanoid
 } from 'nanoid'
 
-export default class InviewTarget {
+export default class Target {
   constructor(obj = null) {
     this.target = null;
     this.timerID = null;
@@ -75,12 +75,8 @@ export default class InviewTarget {
     this._id = nanoid(4);
   }
 
-  log(...args) {
-    Log.log('[InviewTarget]', ...args);
-  }
-
   logEvent(...args) {
-    this.log(...args, this.describe)
+    Log.log(...args, this.describe)
   }
 
   makeEvent(eventType) {

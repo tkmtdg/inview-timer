@@ -1,7 +1,7 @@
 'use strict';
 
 import './style.css';
-import InviewTimer from './src/inview-timer';
+import Timer from './src/timer';
 
 const targets = document.querySelectorAll('.target');
 for (const target of targets) {
@@ -12,7 +12,7 @@ for (const target of targets) {
     target.querySelector('.loop-tries').innerHTML = event.detail.inviewTarget.timerLoopCount;
   });
 }
-const inviewTimer = new InviewTimer({
+const inviewTimer = new Timer({
   debug: true,
   observeTargets: targets,
   inviewTargetOptions: {
