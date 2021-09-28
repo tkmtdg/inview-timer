@@ -64,7 +64,7 @@ export default class Lalo {
   }
 
   observe() {
-    const callback = (entries, observer) => {
+    const callback = (entries) => {
       for (const entry of entries) {
         for (const inviewTarget of this.inviewTargets) {
           if (inviewTarget.target === entry.target) {
@@ -89,22 +89,22 @@ export default class Lalo {
       this.inviewTargets.push(inviewTarget);
 
       inviewTarget.target = observeTarget;
-      observeTarget.addEventListener(Event.TARGET_INVIEW, (event) => {
+      observeTarget.addEventListener(Event.TARGET_INVIEW, () => {
         inviewTarget.setTimer();
       });
-      observeTarget.addEventListener(Event.TARGET_OUTVIEW, (event) => {
+      observeTarget.addEventListener(Event.TARGET_OUTVIEW, () => {
         inviewTarget.clearTimer();
       });
-      observeTarget.addEventListener(Event.TIMER_TIMEDOUT, (event) => {
+      observeTarget.addEventListener(Event.TIMER_TIMEDOUT, () => {
         // noop
       });
-      observeTarget.addEventListener(Event.TIMER_TERMINATED, (event) => {
+      observeTarget.addEventListener(Event.TIMER_TERMINATED, () => {
         observer.unobserve(observeTarget);
       });
-      observeTarget.addEventListener(Event.TIMER_CANCELED, (event) => {
+      observeTarget.addEventListener(Event.TIMER_CANCELED, () => {
         // noop
       });
-      observeTarget.addEventListener(Event.TIMER_LOOP_LIMIT_REACHED, (event) => {
+      observeTarget.addEventListener(Event.TIMER_LOOP_LIMIT_REACHED, () => {
         observer.unobserve(observeTarget);
       });
 

@@ -15,6 +15,6 @@ module.exports = defineConfig({
     },
   },
   plugins: [eslintPlugin({
-    // fix: true
+    fix: true
   })],
 })

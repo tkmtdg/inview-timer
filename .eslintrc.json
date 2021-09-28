@@ -8,9 +8,7 @@
     "sourceType": "module"
   },
   "extends": [
-    // "plugin:@typescript-eslint/recommended",
-    // "eslint:all",
+    "eslint:recommended",
     "prettier"
-    // "plugin:prettier/recommended"
   ]
 }

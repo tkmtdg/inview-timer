@@ -32,10 +32,10 @@ eval('var __defProp=Object.defineProperty,__getOwnPropSymbols=Object.getOwnPrope
 'eturn this._inviewTargetOptions}set inviewTargetOptions(t){this._inviewTargetOptions=t}get intersectionObserverOptions()'+
 '{return this._intersectionObserverOptions}set intersectionObserverOptions(t){this._intersectionObserverOptions=t}avoidId'+
 'Collision(e){this.inviewTargets.some((t=>e.id===t.id))&&(t.log(`ID collision detected: "${e.id}"`),e.refreshId(),this.av'+
-'oidIdCollision(e))}observe(){const t=new IntersectionObserver(((t,i)=>{for(const r of t)for(const t of this.inviewTarget'+
-'s)if(t.target===r.target){t.inview=r.isIntersecting;const i=t.inview?e.TARGET_INVIEW:e.TARGET_OUTVIEW;t.dispatch(i);brea'+
-'k}}),this.intersectionObserverOptions);for(const r of this.observeTargets){const s=new i(__spreadValues({debug:this.debu'+
-'g,target:r},this.inviewTargetOptions));this.avoidIdCollision(s),this.inviewTargets.push(s),s.target=r,r.addEventListener'+
-'(e.TARGET_INVIEW,(t=>{s.setTimer()})),r.addEventListener(e.TARGET_OUTVIEW,(t=>{s.clearTimer()})),r.addEventListener(e.TI'+
-'MER_TIMEDOUT,(t=>{})),r.addEventListener(e.TIMER_TERMINATED,(e=>{t.unobserve(r)})),r.addEventListener(e.TIMER_CANCELED,('+
-'t=>{})),r.addEventListener(e.TIMER_LOOP_LIMIT_REACHED,(e=>{t.unobserve(r)})),t.observe(r)}}}}));');
+'oidIdCollision(e))}observe(){const t=new IntersectionObserver((t=>{for(const i of t)for(const t of this.inviewTargets)if'+
+'(t.target===i.target){t.inview=i.isIntersecting;const r=t.inview?e.TARGET_INVIEW:e.TARGET_OUTVIEW;t.dispatch(r);break}})'+
+',this.intersectionObserverOptions);for(const r of this.observeTargets){const s=new i(__spreadValues({debug:this.debug,ta'+
+'rget:r},this.inviewTargetOptions));this.avoidIdCollision(s),this.inviewTargets.push(s),s.target=r,r.addEventListener(e.T'+
+'ARGET_INVIEW,(()=>{s.setTimer()})),r.addEventListener(e.TARGET_OUTVIEW,(()=>{s.clearTimer()})),r.addEventListener(e.TIME'+
+'R_TIMEDOUT,(()=>{})),r.addEventListener(e.TIMER_TERMINATED,(()=>{t.unobserve(r)})),r.addEventListener(e.TIMER_CANCELED,('+
+'()=>{})),r.addEventListener(e.TIMER_LOOP_LIMIT_REACHED,(()=>{t.unobserve(r)})),t.observe(r)}}}}));');
