@@ -51,6 +51,12 @@ export default class InviewTarget {
   set timerLoopLimit(timerLoopLimit) {
     this._timerLoopLimit = timerLoopLimit;
   }
+  get timerLoopLimitReached() {
+    return (
+      this.timerLoopLimit > 0 &&
+      this.timerLoopCount > this.timerLoopLimit
+    );
+  }
   get timerLoopCount() {
     return this._timerLoopCount;
   }
@@ -69,7 +75,7 @@ export default class InviewTarget {
   }
 
   log(...args) {
-    Log.log(this.constructor.name, ...args);
+    Log.log(`[InviewTarget]`, ...args);
   }
 
   logEvent(...args) {
@@ -88,21 +94,26 @@ export default class InviewTarget {
   }
 
   setTimer() {
+    if (this.timerLoopLimitReached) {
+      this.logEvent('already timer loop limit reached');
+      return;
+    }
     this.logEvent('timer set');
     const timerID = window.setTimeout(() => {
       this.dispatch('timer timedout');
       this.timerID = null;
       if (this.timerLoop) {
-        if (
-          this.timerLoopLimit > 0 &&
-          this.timerLoopCount >= this.timerLoopLimit
-        ) {
+        this._timerLoopCount++;
+        if (this.timerLoopLimitReached) {
           this.logEvent('timer loop limit reached');
+          this.dispatch('timer loop limit reached');
           return;
         }
-        this._timerLoopCount++;
         this.logEvent(`timer loop trying #${this.timerLoopCount}`);
         this.setTimer();
+      } else {
+        this.logEvent('timer terminated');
+        this.dispatch('timer terminated');
       }
     }, this.timeout);
     this.timerID = timerID;

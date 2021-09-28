@@ -1,3 +1,5 @@
+'use strict';
+
 import Log from './log'
 import InviewTarget from './inview-target'
 
@@ -50,7 +52,7 @@ export default class InviewTimer {
   }
 
   log(...args) {
-    Log.log(this.constructor.name, ...args);
+    Log.log(`[InviewTimer]`, ...args);
   }
 
   avoidIdCollision = (inviewTarget) => {
@@ -104,8 +106,16 @@ export default class InviewTimer {
       observeTarget.addEventListener('timer timedout', (event) => {
         this.log(event.type, inviewTarget.describe);
       });
+      observeTarget.addEventListener('timer terminated', (event) => {
+        this.log(event.type, inviewTarget.describe);
+        observer.unobserve(observeTarget);
+      });
       observeTarget.addEventListener('timer canceled', (event) => {
         this.log(event.type, inviewTarget.describe);
+      });
+      observeTarget.addEventListener('timer loop limit reached', (event) => {
+        this.log(event.type, inviewTarget.describe);
+        observer.unobserve(observeTarget);
       });
 
       observer.observe(observeTarget);

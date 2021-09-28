@@ -16,7 +16,7 @@ const inviewTimer = new InviewTimer({
   debug: true,
   observeTargets: targets,
   inviewTargetOptions: {
-    timeout: 5000,
+    timeout: 3000,
     timerLoop: true,
     timerLoopLimit: 3
   },
