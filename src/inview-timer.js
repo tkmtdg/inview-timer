@@ -1,6 +1,7 @@
 'use strict';
 
 import Log from './log'
+import Event from './event';
 import InviewTarget from './inview-target'
 
 export default class InviewTimer {
@@ -69,13 +70,10 @@ export default class InviewTimer {
   observe() {
     const callback = (entries, observer) => {
       for (const entry of entries) {
-        for (const v of this.inviewTargets) {
-          if (v.target === entry.target) {
-            v.inview = entry.isIntersecting;
-            const inviewTarget = this.inviewTargets.find((e, i, a) => {
-              return e.target === entry.target;
-            });
-            const eventType = v.inview ? 'inview in' : 'inview out';
+        for (const inviewTarget of this.inviewTargets) {
+          if (inviewTarget.target === entry.target) {
+            inviewTarget.inview = entry.isIntersecting;
+            const eventType = inviewTarget.inview ? Event.TARGET_INVIEW : Event.TARGET_OUTVIEW;
             inviewTarget.dispatch(eventType);
             break;
           }
@@ -95,26 +93,22 @@ export default class InviewTimer {
       this.inviewTargets.push(inviewTarget);
 
       inviewTarget.target = observeTarget;
-      observeTarget.addEventListener('inview in', (event) => {
-        this.log(event.type, inviewTarget.describe);
+      observeTarget.addEventListener(Event.TARGET_INVIEW, (event) => {
         inviewTarget.setTimer();
       });
-      observeTarget.addEventListener('inview out', (event) => {
-        this.log(event.type, inviewTarget.describe);
+      observeTarget.addEventListener(Event.TARGET_OUTVIEW, (event) => {
         inviewTarget.clearTimer();
       });
-      observeTarget.addEventListener('timer timedout', (event) => {
-        this.log(event.type, inviewTarget.describe);
+      observeTarget.addEventListener(Event.TIMER_TIMEDOUT, (event) => {
+        // noop
       });
-      observeTarget.addEventListener('timer terminated', (event) => {
-        this.log(event.type, inviewTarget.describe);
+      observeTarget.addEventListener(Event.TIMER_TERMINATED, (event) => {
         observer.unobserve(observeTarget);
       });
-      observeTarget.addEventListener('timer canceled', (event) => {
-        this.log(event.type, inviewTarget.describe);
+      observeTarget.addEventListener(Event.TIMER_CANCELED, (event) => {
+        // noop
       });
-      observeTarget.addEventListener('timer loop limit reached', (event) => {
-        this.log(event.type, inviewTarget.describe);
+      observeTarget.addEventListener(Event.TIMER_LOOP_LIMIT_REACHED, (event) => {
         observer.unobserve(observeTarget);
       });
 

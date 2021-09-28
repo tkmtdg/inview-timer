@@ -1,6 +1,7 @@
 'use strict';
 
 import Log from './log'
+import Event from './event';
 import {
   nanoid
 } from 'nanoid'
@@ -98,22 +99,22 @@ export default class InviewTarget {
       this.logEvent('already timer loop limit reached');
       return;
     }
-    this.logEvent('timer set');
+    this.logEvent(Event.TIMER_SET);
     const timerID = window.setTimeout(() => {
-      this.dispatch('timer timedout');
+      this.dispatch(Event.TIMER_TIMEDOUT);
       this.timerID = null;
       if (this.timerLoop) {
         this._timerLoopCount++;
         if (this.timerLoopLimitReached) {
-          this.logEvent('timer loop limit reached');
-          this.dispatch('timer loop limit reached');
+          this.logEvent(Event.TIMER_LOOP_LIMIT_REACHED);
+          this.dispatch(Event.TIMER_LOOP_LIMIT_REACHED);
           return;
         }
         this.logEvent(`timer loop trying #${this.timerLoopCount}`);
         this.setTimer();
       } else {
-        this.logEvent('timer terminated');
-        this.dispatch('timer terminated');
+        this.logEvent(Event.TIMER_TERMINATED);
+        this.dispatch(Event.TIMER_TERMINATED);
       }
     }, this.timeout);
     this.timerID = timerID;
@@ -122,7 +123,7 @@ export default class InviewTarget {
   clearTimer() {
     if (this.timerID) {
       window.clearTimeout(this.timerID);
-      this.dispatch('timer canceled');
+      this.dispatch(Event.TIMER_CANCELED);
     }
   }
 };
